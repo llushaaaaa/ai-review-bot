@@ -22,7 +22,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: ai-review-bot
 
       - name: Run AI Review
         env:
@@ -31,4 +30,3 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: node src/reviewer.js
-        working-directory: ai-review-bot
