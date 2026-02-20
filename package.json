@@ -1,0 +1,16 @@
+{
+  "name": "ai-review-bot",
+  "version": "1.0.0",
+  "description": "AI-powered code review bot for GitHub PRs",
+  "main": "src/reviewer.js",
+  "scripts": {
+    "review": "node src/reviewer.js"
+  },
+  "keywords": ["ai", "code-review", "github", "gemini"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@octokit/rest": "^21.0.2"
+  }
+}
