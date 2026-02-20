@@ -1,0 +1,18 @@
+<div #container>
+  <!-- ❌ *ngIf вместо @if -->
+  <div *ngIf="isLoading">Loading...</div>
+  
+  <!-- ❌ *ngFor без trackBy -->
+  <ul>
+    <li *ngFor="let user of users">
+      <!-- ❌ innerHTML без санитизации -->
+      <div [innerHTML]="user.bio"></div>
+      
+      <span>{{ user.name }}</span>
+      <button (click)="selectUser(user)">Select</button>
+    </li>
+  </ul>
+  
+  <!-- ❌ img без NgOptimizedImage -->
+  <img src="https://example.com/avatar.png" alt="avatar">
+</div>
