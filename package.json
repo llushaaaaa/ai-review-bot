@@ -6,11 +6,16 @@
   "scripts": {
     "review": "node src/reviewer.js"
   },
-  "keywords": ["ai", "code-review", "github", "gemini"],
+  "keywords": [
+    "ai",
+    "code-review",
+    "github",
+    "gemini"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
-    "@octokit/rest": "^21.0.2"
+    "@octokit/rest": "^21.0.2",
+    "groq-sdk": "^0.37.0"
   }
 }

@@ -1,6 +1,6 @@
 # AI Review Bot
 
-Бесплатный AI-бот для ревью кода в GitHub PR, использующий Google Gemini.
+Бесплатный AI-бот для ревью кода в GitHub PR, использующий Groq (Llama 3.3 70B).
 
 ## Возможности
 
@@ -11,15 +11,15 @@
 
 ## Установка
 
-### 1. Получи бесплатный API ключ Gemini
+### 1. Получи бесплатный API ключ Groq
 
-1. Перейди на [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Создай API ключ (бесплатно)
+1. Перейди на [Groq Console](https://console.groq.com/keys)
+2. Зарегистрируйся и создай API ключ (бесплатно)
 
 ### 2. Добавь секрет в GitHub
 
 1. Открой репозиторий → Settings → Secrets and variables → Actions
-2. Создай секрет `GEMINI_API_KEY` с твоим ключом
+2. Создай секрет `GROQ_API_KEY` с твоим ключом
 
 ### 3. Скопируй workflow
 
@@ -62,24 +62,24 @@ jobs:
       - name: Run AI Review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: node /tmp/ai-review-bot/src/reviewer.js
 ```
 
-## Лимиты бесплатного Gemini
+## Лимиты бесплатного Groq
 
-- 15 запросов в минуту
-- 1 000 000 токенов в минуту
-- 1 500 запросов в день
+- 30 запросов в минуту
+- 6000 токенов в минуту (input)
+- 6000 токенов в день (output)
 
 Для большинства проектов этого достаточно.
 
 ## Локальный тест
 
 ```bash
-export GEMINI_API_KEY="your-key"
+export GROQ_API_KEY="your-key"
 export GITHUB_TOKEN="your-token"
 export GITHUB_REPOSITORY="owner/repo"
 export PR_NUMBER="123"

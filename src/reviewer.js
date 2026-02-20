@@ -1,9 +1,9 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
 const { Octokit } = require('@octokit/rest');
 const fs = require('fs');
 const path = require('path');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 function loadRules(ruleName = 'angular') {
@@ -23,10 +23,17 @@ async function getChangedFiles(owner, repo, pullNumber) {
 }
 
 async function reviewWithAI(diff) {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const completion = await groq.chat.completions.create({
+    messages: [
+      { role: 'system', content: REVIEW_PROMPT },
+      { role: 'user', content: diff }
+    ],
+    model: 'llama-3.3-70b-versatile',
+    temperature: 0.3,
+    max_tokens: 4096,
+  });
 
-  const result = await model.generateContent(REVIEW_PROMPT + diff);
-  return result.response.text();
+  return completion.choices[0]?.message?.content || 'No review generated';
 }
 
 async function postReview(owner, repo, pullNumber, body, event = "COMMENT") {
